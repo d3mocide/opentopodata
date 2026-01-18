@@ -4,6 +4,7 @@ RUN set -e && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
     gcc \
+    g++ \
     python3.11-dev \
     libmemcached-dev \
     zlib1g-dev \
