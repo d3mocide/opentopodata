@@ -6,7 +6,8 @@ RUN set -e && \
     gcc \
     python3.11-dev \
     libmemcached-dev \
-    zlib1g-dev
+    zlib1g-dev \
+    libgdal-dev
 
 COPY requirements.txt /requirements.txt
 RUN pip config set global.disable-pip-version-check true && \
@@ -24,6 +25,7 @@ RUN set -e && \
     nginx \
     memcached \
     libmemcached11 \
+    libgdal32 \
     supervisor && \
     rm -rf /var/lib/apt/lists/*
 
