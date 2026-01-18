@@ -3,37 +3,47 @@ FROM python:3.11.10-slim-bookworm as builder
 RUN set -e && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-        gcc \
-        python3.11-dev
+    gcc \
+    python3.11-dev \
+    libmemcached-dev \
+    zlib1g-dev
 
+COPY requirements.txt /requirements.txt
 RUN pip config set global.disable-pip-version-check true && \
     pip wheel --wheel-dir=/root/wheels uwsgi==2.0.28 && \
-    pip wheel --wheel-dir=/root/wheels regex==2024.11.6 
+    pip wheel --wheel-dir=/root/wheels regex==2024.11.6 && \
+    pip wheel --wheel-dir=/root/wheels -r /requirements.txt 
 
 # The actual container.
 FROM python:3.11.10-slim-bookworm
 RUN set -e && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-        inotify-tools \
-        nano \
-        nginx \
-        memcached \
-        supervisor && \
+    inotify-tools \
+    nano \
+    nginx \
+    memcached \
+    libmemcached11 \
+    supervisor && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /root/wheels /root/wheels
 COPY requirements.txt /app/requirements.txt
 RUN pip install \
-        --no-index \
-        --no-cache-dir \
-        --disable-pip-version-check \
-        --find-links=/root/wheels \
-        uwsgi regex && \
-    pip install --no-cache-dir --disable-pip-version-check -r /app/requirements.txt && \
-        rm -rf /root/.cache/pip/* && \
-        rm root/wheels/* && \
-        rm /app/requirements.txt
+    --no-index \
+    --no-cache-dir \
+    --disable-pip-version-check \
+    --find-links=/root/wheels \
+    uwsgi regex && \
+    pip install \
+    --no-index \
+    --no-cache-dir \
+    --disable-pip-version-check \
+    --find-links=/root/wheels \
+    -r /app/requirements.txt && \
+    rm -rf /root/.cache/pip/* && \
+    rm -rf /root/wheels/* && \
+    rm /app/requirements.txt
 
 WORKDIR /app
 COPY . /app/
