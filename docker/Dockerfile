@@ -53,7 +53,9 @@ COPY . /app/
 
 RUN echo > /etc/nginx/sites-available/default && \
     cp /app/docker/nginx.conf /etc/nginx/conf.d/nginx.conf && \
-    cp /app/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+    cp /app/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf && \
+    sed -i 's/\r$//' /app/docker/run.sh && \
+    chmod +x /app/docker/run.sh
 
 CMD ["sh", "/app/docker/run.sh"]
 EXPOSE 5000
