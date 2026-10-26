@@ -37,7 +37,7 @@ cligj==0.7.2
     # via rasterio
 coverage[toml]==7.10.3
     # via pytest-cov
-flask==3.1.1
+flask==3.1.3
     # via
     #   -r requirements.in
     #   flask-caching
@@ -70,6 +70,7 @@ packaging==25.0
     #   black
     #   build
     #   pytest
+    #   wheel
 pathspec==0.12.1
     # via black
 pip-tools==7.5.0
@@ -82,7 +83,7 @@ pluggy==1.6.0
     #   pytest-cov
 polyline==2.0.3
     # via -r requirements.in
-pygments==2.19.2
+pygments==2.20.0
     # via pytest
 pylibmc==1.6.3
     # via -r requirements.in
@@ -94,7 +95,7 @@ pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
-pytest==8.4.1
+pytest==9.0.3
     # via
     #   -r requirements.in
     #   pytest-cov
@@ -107,15 +108,15 @@ pyyaml==6.0.2
     # via -r requirements.in
 rasterio==1.3.11
     # via -r requirements.in
-requests==2.32.4
+requests==2.33.0
     # via -r requirements.in
 snuggs==1.4.7
     # via rasterio
-urllib3==2.5.0
+urllib3==2.8.0
     # via requests
 watchdog==6.0.0
     # via -r requirements.in
-werkzeug==3.1.3
+werkzeug==3.1.9
     # via flask
-wheel==0.45.1
+wheel==0.46.2
     # via pip-tools
